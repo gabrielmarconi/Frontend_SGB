@@ -1,0 +1,340 @@
+<form [formGroup]="atendimentosForm" (submit)="adicionarAtendimento()">
+  <div class="modal-content">
+    <div class="page-title">
+      <mat-icon inline="true">add</mat-icon>
+      <h3>Adicionar Atendimento</h3>
+    </div>
+    <mat-tab-group dynamicHeight>
+      <mat-tab label="Principal">
+        <div class="row mt-3">
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-select
+                placeholderLabel="Encontrar cliente..."
+                noEntriesFoundLabel="Cliente não encontrado"
+                [formControl]="atendimentosForm.controls.idCliente"
+                placeholder="Cliente"
+                #singleSelect
+              >
+                <mat-option>
+                  <ngx-mat-select-search
+                    placeholderLabel="Encontrar cliente..."
+                    noEntriesFoundLabel="Cliente não encontrado"
+                    [formControl]="clienteFilterCtrl"
+                  ></ngx-mat-select-search>
+                </mat-option>
+                <mat-option
+                  *ngFor="let cliente of filteredClientes | async"
+                  [value]="cliente.id"
+                >
+                  {{ cliente.nome }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="atendimentosForm.get('idCliente').hasError('required')"
+              >
+                Dado obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-select
+                placeholderLabel="Encontrar funcionário..."
+                noEntriesFoundLabel="Funcionário não encontrado"
+                [formControl]="atendimentosForm.controls.idFuncionario"
+                placeholder="Funcionário"
+                #singleSelect
+              >
+                <mat-option>
+                  <ngx-mat-select-search
+                    placeholderLabel="Encontrar funcionário..."
+                    noEntriesFoundLabel="Funcionário não encontrado"
+                    [formControl]="funcionarioFilterCtrl"
+                  ></ngx-mat-select-search>
+                </mat-option>
+                <mat-option
+                  *ngFor="let funcionario of filteredFuncionarios | async"
+                  [value]="funcionario.id"
+                >
+                  {{ funcionario.nome }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="
+                  atendimentosForm.get('idFuncionario').hasError('required')
+                "
+              >
+                Dado obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-select
+                placeholderLabel="Encontrar formas de pagamento..."
+                noEntriesFoundLabel="Forma de Pagamento não encontrada"
+                [formControl]="atendimentosForm.controls.idFormaPagamento"
+                placeholder="Forma de Pagamento"
+                #singleSelect
+              >
+                <mat-option>
+                  <ngx-mat-select-search
+                    placeholderLabel="Encontrar formas de pagamento..."
+                    noEntriesFoundLabel="Forma de Pagamento não encontrada"
+                    [formControl]="formasPagamentoFilterCtrl"
+                  ></ngx-mat-select-search>
+                </mat-option>
+                <mat-option
+                  *ngFor="let formaPagamento of filteredFormasPagamento | async"
+                  [value]="formaPagamento.id"
+                >
+                  {{ formaPagamento.descricao }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="
+                  atendimentosForm.get('idFormaPagamento').hasError('required')
+                "
+              >
+                Dado obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-label>Valor Total</mat-label>
+              <input
+                matInput
+                readonly
+                maxlength="13"
+                formControlName="valorTotal"
+                currencyMask
+                [options]="{
+                  align: 'start',
+                  allowNegative: false,
+                  prefix: 'R$ ',
+                  thousands: '.',
+                  decimal: ','
+                }"
+              />
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="atendimentosForm.get('valorTotal').hasError('required')"
+              >
+                Dado obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-label>Valor Desconto</mat-label>
+              <input
+                matInput
+                maxlength="13"
+                formControlName="valorDesconto"
+                currencyMask
+                [options]="{
+                  align: 'start',
+                  allowNegative: false,
+                  prefix: 'R$ ',
+                  thousands: '.',
+                  decimal: ','
+                }"
+              />
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="
+                  atendimentosForm.get('valorDesconto').hasError('required')
+                "
+              >
+                Dado obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-label>Data Hora</mat-label>
+              <input
+                matInput
+                formControlName="dataHora"
+                type="datetime-local"
+                max="9999-12-31T23:59"
+              />
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="atendimentosForm.get('dataHora').hasError('required')"
+              >
+                Dado obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field
+              class="example-full-width w-100"
+              appearance="outline"
+            >
+              <mat-label>Data Hora Término</mat-label>
+              <input
+                matInput
+                formControlName="dataHoraTermino"
+                type="datetime-local"
+                max="2100-12-31T23:59"
+                min="2020-12-31T23:59"
+              />
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="
+                  atendimentosForm.get('dataHoraTermino').hasError('required')
+                "
+              >
+                Dado obrigatório.
+              </mat-error>
+              <mat-error
+                style="font-size: 11px"
+                *ngIf="
+                  atendimentosForm
+                    .get('dataHoraTermino')
+                    .hasError('dataTerminoInvalida')
+                "
+              >
+                A data/hora de término deve ser maior que a de início.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div
+            class="col-md-12 d-flex align-items-end justify-content-end mr-2"
+          >
+            <mat-checkbox
+              (change)="setCheckbox($event, 'confirmado')"
+              [checked]="
+                atendimentosForm.controls['confirmado'].value == 'S'
+                  ? true
+                  : false
+              "
+              [disabled]="true"
+            >
+              Confirmado
+            </mat-checkbox>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Serviços">
+        <div class="row">
+          <p
+            *ngIf="atendimentosForm.get('dataHora').valid"
+            (click)="adicionarServico()"
+            style="cursor: pointer; margin-bottom: 10px; margin-top: 20px"
+          >
+            <i
+              class="fas fa-plus-circle"
+              style="color: #543d54; font-size: 15px"
+            ></i>
+            Adicionar Serviços
+          </p>
+        </div>
+        <div class="table-container mt-2 mb-4">
+          <div class="table-wrapper mb-4">
+            <table mat-table [dataSource]="dataSourceServico">
+              <ng-container matColumnDef="Descricao">
+                <th mat-header-cell *matHeaderCellDef>Descrição</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  {{ element.descricao }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Duracao">
+                <th mat-header-cell *matHeaderCellDef>Duração</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  {{ element.duracao }} {{ " minutos" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  {{ element.valor | currency : "BRL" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Acoes">
+                <th mat-header-cell *matHeaderCellDef>Ações</th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                  <button
+                    mat-icon-button
+                    color="accent"
+                    type="button"
+                    aria-label="Editar Registro"
+                    (click)="adicionarServico(element, i)"
+                  >
+                    <mat-icon class="d-flex">edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    type="button"
+                    color="accent"
+                    aria-label="Excluir Registro"
+                    (click)="removerServico(i)"
+                  >
+                    <mat-icon class="d-flex">delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumnsServicos"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumnsServicos"
+              ></tr>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="modal-actions">
+      <button
+        type="submit"
+        mat-raised-button
+        color="accent"
+        style="margin-right: 10px"
+        (click)="adicionarAtendimento()"
+        [disabled]="atendimentosForm.invalid"
+      >
+        Confirmar
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="fecharModal()"
+        type="button"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</form>

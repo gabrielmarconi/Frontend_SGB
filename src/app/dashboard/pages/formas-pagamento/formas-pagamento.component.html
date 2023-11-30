@@ -1,0 +1,64 @@
+<div class="page-title">
+  <h1>Gerenciamento de Formas de Pagamento</h1>
+</div>
+
+<div class="row">
+  <div class="col d-flex align-items-end">
+    <p
+      (click)="adicionarFormaPagamento()"
+      style="cursor: pointer; margin-bottom: 10px; margin-top: 20px"
+    >
+      <i class="fas fa-plus-circle" style="color: #543d54; font-size: 15px"></i>
+      Adicionar Forma de Pagamento
+    </p>
+  </div>
+  <button
+    style="margin-left: 5px"
+    mat-icon-button
+    color="accent"
+    type="button"
+    (click)="gerarExcel()"
+    aria-label="Exportar"
+    matTooltip="Exportar"
+  >
+    <mat-icon class="d-flex">content_paste_go</mat-icon>
+  </button>
+</div>
+<div class="table-container">
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSourceFormaPagamento">
+      <ng-container matColumnDef="Descricao">
+        <th mat-header-cell *matHeaderCellDef>Descrição</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ element.descricao }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Editar Registro"
+            (click)="adicionarFormaPagamento(element, i)"
+          >
+            <mat-icon class="d-flex">edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Excluir Registro"
+            (click)="removerFormaPagamento(element)"
+          >
+            <mat-icon class="d-flex">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsFormaPagamento"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumnsFormaPagamento"
+      ></tr>
+    </table>
+  </div>
+</div>

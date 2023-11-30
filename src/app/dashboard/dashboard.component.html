@@ -1,0 +1,96 @@
+<mat-sidenav-container class="h-100">
+  <mat-sidenav #sidenav mode="side" opened class="border-0">
+    <div class="d-flex align-items-end justify-content-end mt-2">
+      <button mat-icon-button (click)="toggleSidenav()">
+        <mat-icon class="d-flex text-white"> arrow_back</mat-icon>
+      </button>
+    </div>
+    <div
+      class="d-flex align-items-center justify-content-center"
+      style="height: 50px"
+    >
+      <img src="/assets/images/SGBLogoPequena.png" style="width: 60px" />
+    </div>
+    <mat-nav-list class="mt-5">
+      <ng-container *ngFor="let menu of sidenavMenus">
+        <ng-container *ngIf="!menu.subMenus; else subMenu">
+          <a
+            mat-list-item
+            [routerLink]="[menu.route]"
+            routerLinkActive="active-link"
+            *ngIf="menu.visible"
+          >
+            <div class="d-flex align-items-center">
+              <mat-icon style="color: white; margin-right: 10px">{{
+                menu.icon
+              }}</mat-icon>
+              <span class="text-white">{{ menu.label }}</span>
+            </div>
+          </a>
+        </ng-container>
+        <ng-template #subMenu>
+          <a
+            mat-list-item
+            (click)="toggleSubMenu(menu)"
+            style="padding-top: 0px"
+          >
+            <div class="d-flex align-items-center p-0">
+              <mat-icon style="color: white; margin-right: 10px">{{
+                menu.icon
+              }}</mat-icon>
+              <span class="text-white">{{ menu.label }}</span>
+              <mat-icon class="text-white" style="margin-left: 5px">{{
+                menu.subMenuOpened ? "keyboard_arrow_up" : "keyboard_arrow_down"
+              }}</mat-icon>
+            </div>
+          </a>
+          <div *ngIf="menu.subMenuOpened" class="smaller-submenu">
+            <mat-nav-list class="p-0">
+              <ng-container *ngFor="let subMenu of menu.subMenus">
+                <a
+                  mat-list-item
+                  *ngIf="subMenu.visible"
+                  [routerLink]="[subMenu.route]"
+                  routerLinkActive="active-link"
+                >
+                  <div
+                    class="d-flex align-items-center"
+                    style="margin-left: 10px"
+                  >
+                    <mat-icon style="color: white; margin-right: 10px">{{
+                      subMenu.icon
+                    }}</mat-icon>
+                    <span class="text-white">{{ subMenu.label }}</span>
+                  </div>
+                </a>
+              </ng-container>
+            </mat-nav-list>
+          </div>
+        </ng-template>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="d-flex flex-column h-100">
+    <mat-toolbar class="w-100 toolbar">
+      <mat-toolbar-row>
+        <button
+          *ngIf="!this.sidenav.opened"
+          mat-icon-button
+          (click)="toggleSidenav()"
+        >
+          <mat-icon class="d-flex text-white">menu</mat-icon>
+        </button>
+        <span class="fill-space"></span>
+        <span class="text-white">Sair</span>
+        <div class="d-flex justify-content-center align-items-center">
+          <button mat-icon-button (click)="logout()">
+            <mat-icon class="d-flex" class="text-white">exit_to_app</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="form-body d-flex flex-column flex-grow-1">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

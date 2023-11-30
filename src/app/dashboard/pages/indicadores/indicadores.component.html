@@ -1,0 +1,37 @@
+<div class="page-title">
+  <h1>Indicadores</h1>
+</div>
+<ng-container *ngIf="hasDataForGraphics(); else noData">
+  <app-pie-graphic
+    *ngIf="dadosDoGraficoAbertos"
+    [dadosDoGrafico]="dadosDoGraficoAbertos"
+    [legendaGraficos]="'Atendimentos Abertos'"
+  ></app-pie-graphic>
+
+  <app-pie-graphic
+    *ngIf="dadosDoGraficoMes"
+    [dadosDoGrafico]="dadosDoGraficoMes"
+    [legendaGraficos]="'Atendimentos no Mês'"
+  ></app-pie-graphic>
+
+  <app-pie-graphic
+    *ngIf="dadosDoGraficoCliente"
+    [dadosDoGrafico]="dadosDoGraficoCliente"
+    [legendaGraficos]="'Atendimentos por Cliente'"
+  ></app-pie-graphic>
+
+  <app-pie-graphic
+    *ngIf="dadosDoGraficoFuncionario"
+    [dadosDoGrafico]="dadosDoGraficoFuncionario"
+    [legendaGraficos]="'Atendimentos por Funcionário'"
+  ></app-pie-graphic>
+
+  <app-pie-graphic
+    *ngIf="dadosDoGraficoServico"
+    [dadosDoGrafico]="dadosDoGraficoServico"
+    [legendaGraficos]="'Atendimentos por Serviço'"
+  ></app-pie-graphic>
+</ng-container>
+<ng-template #noData>
+  <p class="p-3 text-center">Não existem registros para os indicadores</p>
+</ng-template>

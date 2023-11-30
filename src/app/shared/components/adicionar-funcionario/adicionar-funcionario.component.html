@@ -1,0 +1,281 @@
+<form [formGroup]="funcionariosForm" (submit)="adicionarFuncionario()">
+  <div class="modal-content">
+    <div class="page-title">
+      <mat-icon inline="true" class="mr-1">{{ icon }}</mat-icon>
+      <h3 style="margin-left: 10px">{{ title }}</h3>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Nome Funcionário</mat-label>
+          <input matInput formControlName="nome" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('nome').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('email').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Data Nascimento</mat-label>
+          <input matInput formControlName="dataNascimento" type="date" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('dataNascimento').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Hora Início Expediente</mat-label>
+          <input matInput formControlName="horaInicioExpediente" type="time" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="
+              funcionariosForm.get('horaInicioExpediente').hasError('required')
+            "
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Hora Término Expediente</mat-label>
+          <input matInput formControlName="horaTerminoExpediente" type="time" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="
+              funcionariosForm.get('horaTerminoExpediente').hasError('required')
+            "
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input
+            matInput
+            formControlName="telefone"
+            type="text"
+            [mask]="'(00) 0000-00009'"
+          />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('telefone').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4" *ngIf="!this.data.element">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <div class="mat-form-field-flex">
+            <input
+              [type]="showPass ? 'text' : 'password'"
+              matInput
+              formControlName="senha"
+              maxlength="50"
+            />
+
+            <mat-icon (click)="showPass = !showPass" class="toggle-password">
+              {{ showPass ? "visibility" : "visibility_off" }}
+            </mat-icon>
+          </div>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('senha').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('senha').hasError('minlength')"
+          >
+            A senha deve ter no mínimo
+            {{
+              funcionariosForm.get("senha").getError("minlength").requiredLength
+            }}
+            caracteres.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>SMTP Host</mat-label>
+          <input matInput formControlName="SMTPHost" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('SMTPHost').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>SMTP Remetente</mat-label>
+          <input matInput formControlName="SMTPRemetente" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('SMTPRemetente').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>SMTP Port</mat-label>
+          <input matInput formControlName="SMTPPort" maxlength="50" mask="0*" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('SMTPPort').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>SMTP Usuario</mat-label>
+          <input matInput formControlName="SMTPUsuario" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('SMTPUsuario').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>SMTP Senha</mat-label>
+          <div class="mat-form-field-flex">
+            <input
+              [type]="showPass ? 'text' : 'password'"
+              matInput
+              formControlName="SMTPSenha"
+              maxlength="50"
+              autocomplete="current-password"
+            />
+
+            <mat-icon (click)="showPass = !showPass" class="toggle-password">
+              {{ showPass ? "visibility" : "visibility_off" }}
+            </mat-icon>
+          </div>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('SMTPSenha').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-md-4"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>SMTP Timeout</mat-label>
+          <input
+            matInput
+            formControlName="SMTPTimeout"
+            maxlength="50"
+            mask="0*"
+          />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="funcionariosForm.get('SMTPTimeout').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div
+        class="col-3 d-flex align-items-center justify-content-start mr-2"
+        *ngIf="funcionariosForm.get('administrador').value == 'S'"
+      >
+        <mat-checkbox
+          (change)="setCheckbox($event, 'SMTPConexaoSegura')"
+          [checked]="
+            funcionariosForm.controls['SMTPConexaoSegura'].value == 'S'
+              ? true
+              : false
+          "
+        >
+          Conexão Segura
+        </mat-checkbox>
+      </div>
+      <div class="col d-flex align-items-center justify-content-start mr-2">
+        <mat-checkbox
+          (change)="setCheckbox($event, 'administrador')"
+          [disabled]="desabilitarCheckboxAdm"
+          [checked]="
+            funcionariosForm.controls['administrador'].value == 'S'
+              ? true
+              : false
+          "
+        >
+          Administrador
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        style="margin-right: 10px"
+        [disabled]="funcionariosForm.invalid"
+        (click)="adicionarFuncionario()"
+      >
+        Confirmar
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        type="button"
+        (click)="fecharModal()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</form>

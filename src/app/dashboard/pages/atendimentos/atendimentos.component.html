@@ -1,0 +1,108 @@
+<div class="page-title">
+  <h1>Gerenciamento de Atendimentos</h1>
+</div>
+
+<div class="row">
+  <div class="col d-flex align-items-end">
+    <p
+      (click)="adicionarAtendimento()"
+      style="cursor: pointer; margin-bottom: 10px; margin-top: 20px"
+    >
+      <i class="fas fa-plus-circle" style="color: #543d54; font-size: 15px"></i>
+      Adicionar Atendimento
+    </p>
+  </div>
+  <button
+    style="margin-left: 5px"
+    mat-icon-button
+    color="accent"
+    type="button"
+    (click)="gerarExcel()"
+    aria-label="Exportar"
+    matTooltip="Exportar"
+  >
+    <mat-icon class="d-flex">content_paste_go</mat-icon>
+  </button>
+</div>
+<div class="table-container">
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSourceAtendimentos">
+      <ng-container matColumnDef="NomeCliente">
+        <th mat-header-cell *matHeaderCellDef>Nome Cliente</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ element.cliente }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="NomeFuncionario">
+        <th mat-header-cell *matHeaderCellDef>Nome Funcionário</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ element.funcionario }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="FormaPagamento">
+        <th mat-header-cell *matHeaderCellDef>Forma de Pagamento</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ element.formaPagamento }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Valor">
+        <th mat-header-cell *matHeaderCellDef>Valor</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          {{ element.valorTotal | currency : "BRL" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Editar Registro"
+            matTooltip="Editar Registro"
+            (click)="adicionarAtendimento(element, i)"
+          >
+            <mat-icon class="d-flex">edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="Excluir Registro"
+            aria-label="Excluir Registro"
+            (click)="removerAtendimento(element)"
+          >
+            <mat-icon class="d-flex">delete</mat-icon>
+          </button>
+
+          <button
+            *ngIf="tipoUsuario != 'C'"
+            mat-icon-button
+            matTooltip="Conceder Desconto"
+            color="accent"
+            aria-label="Conceder Desconto"
+            (click)="concederDesconto(element)"
+          >
+            <mat-icon class="d-flex">price_change</mat-icon>
+          </button>
+
+          <button
+            *ngIf="element.confirmado == 'N'"
+            mat-icon-button
+            color="accent"
+            matTooltip="Confirmar Atendimento"
+            aria-label="Confirmar Atendimento"
+            (click)="confirmarAtendimento(element)"
+          >
+            <mat-icon class="d-flex">check_circle</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsAtendimento"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumnsAtendimento"
+      ></tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+@import "./src/styles";
+
+.fill-space {
+  flex-grow: 1;
+}
+
+mat-sidenav {
+  width: 40vh !important;
+  background-color: $primary-color !important;
+
+  // Media Queries
+  @media (max-width: 500px) {
+    width: 100% !important;
+  }
+}
+
+.icon {
+  font-size: 20px;
+  color: white;
+  vertical-align: middle;
+}
+
+mat-toolbar {
+  background-color: $primary-color;
+}
+
+.active-link {
+  background-color: #2b1d2b93;
+}
+
+.smaller-submenu {
+  padding: 0; /* Ajusta o preenchimento interno */
+}
+
+.smaller-submenu mat-list-item {
+  height: 32px; /* Ajusta a altura dos itens */
+  line-height: 32px; /* Alinha o texto verticalmente no centro */
+}
+
+.smaller-submenu .mat-icon {
+  font-size: 18px;
+}

@@ -1,0 +1,68 @@
+<form [formGroup]="loginForm" (submit)="fazerLogin()">
+  <div class="login-container">
+    <div>
+      <img class="logo" src="/assets/images/SGBLogo.png" />
+    </div>
+    <div class="custom-card">
+      <div class="card-header">Bem-vindo ao SGB, faça login ou cadastre-se</div>
+
+      <div class="card-content">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Login</mat-label>
+          <input matInput placeholder="E-mail" formControlName="Login" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="loginForm.get('Login').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <div class="mat-form-field-flex">
+            <input
+              [type]="showPass ? 'text' : 'password'"
+              matInput
+              formControlName="Senha"
+              maxlength="50"
+            />
+
+            <mat-icon (click)="showPass = !showPass" class="toggle-password">
+              {{ showPass ? "visibility" : "visibility_off" }}
+            </mat-icon>
+          </div>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="loginForm.get('Senha').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <div class="forgot-password-container">
+          <u style="font-size: 15px; cursor: pointer" (click)="recuperarSenha()"
+            >Esqueci minha senha</u
+          >
+        </div>
+      </div>
+      <div class="custom-actions">
+        <button
+          class="mb-2"
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="loginForm.invalid"
+        >
+          Entrar
+        </button>
+        <button
+          mat-stroked-button
+          color="accent"
+          type="button"
+          (click)="cadastrar()"
+        >
+          Cadastre-se
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,142 @@
+<form [formGroup]="atualizarSenhaForm" (submit)="conferirSenhaCompativeis()">
+  <div class="modal-content">
+    <div class="page-title mb-3">
+      <mat-icon inline="true" class="mr-1">{{ icon }}</mat-icon>
+      <h3 style="margin-left: 10px">{{ title }}</h3>
+    </div>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input matInput placeholder="Email" formControlName="email" />
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="atualizarSenhaForm.get('email').hasError('required')"
+      >
+        Dado obrigatório.
+      </mat-error>
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="
+          atualizarSenhaForm.get('email').hasError('email') &&
+          !atualizarSenhaForm.get('email').hasError('required')
+        "
+      >
+        E-mail inválido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Senha Atual</mat-label>
+      <div class="mat-form-field-flex">
+        <input
+          [type]="showPassAtual ? 'text' : 'password'"
+          matInput
+          formControlName="senhaAtual"
+          maxlength="50"
+        />
+
+        <mat-icon
+          (click)="showPassAtual = !showPassAtual"
+          class="toggle-password"
+        >
+          {{ showPassAtual ? "visibility" : "visibility_off" }}
+        </mat-icon>
+      </div>
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="atualizarSenhaForm.get('senhaAtual').hasError('required')"
+      >
+        Dado obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Nova Senha</mat-label>
+      <div class="mat-form-field-flex">
+        <input
+          [type]="showPassNew ? 'text' : 'password'"
+          matInput
+          formControlName="novaSenha"
+          maxlength="50"
+        />
+
+        <mat-icon (click)="showPassNew = !showPassNew" class="toggle-password">
+          {{ showPassNew ? "visibility" : "visibility_off" }}
+        </mat-icon>
+      </div>
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="atualizarSenhaForm.get('novaSenha').hasError('required')"
+      >
+        Dado obrigatório.
+      </mat-error>
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="atualizarSenhaForm.get('novaSenha').hasError('minlength')"
+      >
+        A senha deve ter no mínimo
+        {{
+          atualizarSenhaForm.get("novaSenha").getError("minlength")
+            .requiredLength
+        }}
+        caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Confirmar Senha</mat-label>
+      <div class="mat-form-field-flex">
+        <input
+          [type]="showPassConfirm ? 'text' : 'password'"
+          matInput
+          formControlName="confirmarSenha"
+          maxlength="50"
+        />
+
+        <mat-icon
+          (click)="showPassConfirm = !showPassConfirm"
+          class="toggle-password"
+        >
+          {{ showPassConfirm ? "visibility" : "visibility_off" }}
+        </mat-icon>
+      </div>
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="atualizarSenhaForm.get('confirmarSenha').hasError('required')"
+      >
+        Dado obrigatório.
+      </mat-error>
+      <mat-error
+        style="font-size: 11px"
+        *ngIf="atualizarSenhaForm.get('confirmarSenha').hasError('minlength')"
+      >
+        A senha deve ter no mínimo
+        {{
+          atualizarSenhaForm.get("confirmarSenha").getError("minlength")
+            .requiredLength
+        }}
+        caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="modal-actions mt-2">
+      <button
+        mat-raised-button
+        color="accent"
+        style="margin-right: 10px"
+        type="submit"
+        [disabled]="atualizarSenhaForm.invalid"
+      >
+        Confirmar
+      </button>
+      <button
+        mat-stroked-button
+        color="accent"
+        type="button"
+        (click)="fecharModal()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</form>

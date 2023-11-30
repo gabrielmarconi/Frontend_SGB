@@ -1,0 +1,123 @@
+<form [formGroup]="cadastroForm" (submit)="concluirCadastro()">
+  <div class="register-container">
+    <div class="custom-card">
+      <div class="card-header">
+        <p style="margin-bottom: 0px">Cadastro de Cliente</p>
+      </div>
+      <div class="card-content">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="Nome" formControlName="nome" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="cadastroForm.get('nome').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="Email" formControlName="email" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="cadastroForm.get('email').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="
+              cadastroForm.get('email').hasError('email') &&
+              !cadastroForm.get('email').hasError('required')
+            "
+          >
+            E-mail inválido.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input
+            matInput
+            placeholder="Telefone"
+            formControlName="telefone"
+            type="text"
+            [mask]="'(00) 0000-00009'"
+          />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="cadastroForm.get('telefone').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="
+              !cadastroForm.get('telefone').hasError('required') &&
+              cadastroForm.get('telefone').invalid
+            "
+          >
+            Formato inválido.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput formControlName="dataNascimento" type="date" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="cadastroForm.get('dataNascimento').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <div class="mat-form-field-flex">
+            <input
+              [type]="showPass ? 'text' : 'password'"
+              matInput
+              formControlName="senha"
+              maxlength="50"
+            />
+
+            <mat-icon (click)="showPass = !showPass" class="toggle-password">
+              {{ showPass ? "visibility" : "visibility_off" }}
+            </mat-icon>
+          </div>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="cadastroForm.get('senha').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="cadastroForm.get('senha').hasError('minlength')"
+          >
+            A senha deve ter no mínimo
+            {{ cadastroForm.get("senha").getError("minlength").requiredLength }}
+            caracteres.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="custom-actions">
+        <button
+          class="mb-2"
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="cadastroForm.invalid"
+        >
+          Concluir Cadastro
+        </button>
+        <button
+          mat-stroked-button
+          color="accent"
+          type="button"
+          (click)="cancelarCadastro()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

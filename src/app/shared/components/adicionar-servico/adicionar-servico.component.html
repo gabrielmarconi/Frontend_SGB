@@ -1,0 +1,91 @@
+<form [formGroup]="servicosForm" (submit)="adicionarServico()">
+  <div class="modal-content">
+    <div class="page-title">
+      <mat-icon inline="true">{{ icon }}</mat-icon>
+      <h3 style="margin-left: 10px">{{ title }}</h3>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="descricao" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="servicosForm.get('descricao').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            maxlength="13"
+            formControlName="valor"
+            currencyMask
+            [options]="{
+              align: 'start',
+              allowNegative: false,
+              prefix: 'R$ ',
+              thousands: '.',
+              decimal: ','
+            }"
+          />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="servicosForm.get('valor').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Duração</mat-label>
+          <input
+            matInput
+            formControlName="duracao"
+            type="text"
+            suffix=" minutos"
+            mask="0*"
+          />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="servicosForm.get('duracao').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 d-flex align-items-end justify-content-end mr-2">
+        <mat-checkbox
+          (change)="setCheckbox($event, 'ativo')"
+          [checked]="servicosForm.controls['ativo'].value == 'S' ? true : false"
+        >
+          Ativo
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button
+        mat-raised-button
+        color="accent"
+        style="margin-right: 10px"
+        (click)="adicionarServico()"
+        [disabled]="servicosForm.invalid"
+      >
+        Confirmar
+      </button>
+      <button
+        mat-stroked-button
+        type="button"
+        color="accent"
+        (click)="fecharModal()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</form>

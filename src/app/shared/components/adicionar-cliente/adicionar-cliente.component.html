@@ -1,0 +1,113 @@
+<form [formGroup]="clientesForm" (submit)="adicionarCliente()">
+  <div class="modal-content">
+    <div class="page-title">
+      <mat-icon inline="true">{{ icon }}</mat-icon>
+      <h3 style="margin-left: 10px">{{ title }}</h3>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Nome Cliente</mat-label>
+          <input matInput formControlName="nome" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="clientesForm.get('nome').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" maxlength="50" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="clientesForm.get('email').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Data Nascimento</mat-label>
+          <input matInput formControlName="dataNascimento" type="date" />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="clientesForm.get('dataNascimento').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input
+            matInput
+            formControlName="telefone"
+            type="text"
+            [mask]="'(00) 0000-00009'"
+          />
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="clientesForm.get('telefone').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6" *ngIf="!this.data.element">
+        <mat-form-field class="example-full-width w-100" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <div class="mat-form-field-flex">
+            <input
+              [type]="showPass ? 'text' : 'password'"
+              matInput
+              formControlName="senha"
+              maxlength="50"
+            />
+
+            <mat-icon (click)="showPass = !showPass" class="toggle-password">
+              {{ showPass ? "visibility" : "visibility_off" }}
+            </mat-icon>
+          </div>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="clientesForm.get('senha').hasError('required')"
+          >
+            Dado obrigatório.
+          </mat-error>
+          <mat-error
+            style="font-size: 11px"
+            *ngIf="clientesForm.get('senha').hasError('minlength')"
+          >
+            A senha deve ter no mínimo
+            {{ clientesForm.get("senha").getError("minlength").requiredLength }}
+            caracteres.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button
+        mat-raised-button
+        color="accent"
+        style="margin-right: 10px"
+        (click)="adicionarCliente()"
+        [disabled]="clientesForm.invalid"
+      >
+        Confirmar
+      </button>
+      <button
+        mat-stroked-button
+        type="button"
+        color="accent"
+        (click)="fecharModal()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</form>

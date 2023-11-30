@@ -1,0 +1,81 @@
+<div class="page-title">
+  <h1>Gerenciamento de Funcionários</h1>
+</div>
+
+<div class="row">
+  <div class="col d-flex align-items-end">
+    <p
+      (click)="adicionarFuncionario()"
+      style="cursor: pointer; margin-bottom: 10px; margin-top: 20px"
+    >
+      <i class="fas fa-plus-circle" style="color: #543d54; font-size: 15px"></i>
+      Adicionar Funcionário
+    </p>
+  </div>
+  <button
+    style="margin-left: 5px"
+    mat-icon-button
+    color="accent"
+    type="button"
+    (click)="gerarExcel()"
+    aria-label="Exportar"
+    matTooltip="Exportar"
+  >
+    <mat-icon class="d-flex">content_paste_go</mat-icon>
+  </button>
+</div>
+<div class="table-container">
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSourceFuncionario">
+      <ng-container matColumnDef="NomeFuncionario">
+        <th mat-header-cell *matHeaderCellDef>Nome Funcionário</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.nome }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>E-mail</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.email }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Editar Registro"
+            (click)="adicionarFuncionario(element, i)"
+          >
+            <mat-icon class="d-flex">edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Excluir Registro"
+            (click)="removerFuncionario(element)"
+          >
+            <mat-icon class="d-flex">delete</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Alterar Senha"
+            (click)="atualizarSenha(element)"
+          >
+            <mat-icon class="d-flex">lock_reset</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsFuncionario"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumnsFuncionario"
+      ></tr>
+    </table>
+  </div>
+</div>

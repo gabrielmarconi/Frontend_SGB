@@ -1,0 +1,21 @@
+.page-title {
+  text-align: start;
+  display: flex;
+}
+
+.page-title h3 {
+  font-size: 20px;
+  color: #000000;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
